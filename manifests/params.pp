@@ -121,6 +121,30 @@ class postgresql::params inherits postgresql::globals {
 
       $firewall_supported   = pick($firewall_supported, true)
     }
+    'Gentoo': {
+      $firewall_supported = pick($firewall_supported, false)
+      $needs_initdb       = pick($needs_initdb, true)
+
+      $client_package_name  = pick($client_package_name, "dev-db/postgresql-base:${version}")
+      $server_package_name  = pick($server_package_name, "dev-db/postgresql-server:${version}")
+      $java_package_name    = pick($java_package_name, 'dev-java/jdbc-postgresql')
+      # Gentoo doesn't have develop packages
+      $devel_package_name   = pick($devel_package_name, 'undef')
+      # Gentoo doesn't have postgresql-contrib package
+      $contrib_package_name = pick($contrib_package_name,'undef')
+      # Gentoo postgresql package provides plperl
+      $plperl_package_name  = pick($plperl_package_name, 'undef')
+      $service_name         = pick($service_name, "postgresql-${version}")
+      $bindir               = pick($bindir, '/usr/bin')
+      $datadir              = pick($datadir, "/var/lib/postgresql/${version}/data")
+      $confdir              = pick($confdir, "/etc/postgresql-${version}")
+      $psql_path            = pick($psql_path, "${bindir}/psql")
+
+      $service_status      = $service_status
+      $service_reload      = pick($service_reload, "/etc/init.d/postgresql-${version} reload")
+      $python_package_name = pick($python_package_name, 'dev-python/psycopg')
+
+    }
 
     default: {
       # Based on the existing version of the firewall module, this is normally
