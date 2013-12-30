@@ -54,7 +54,7 @@ class postgresql::params inherits postgresql::globals {
       }
       $psql_path            = pick($psql_path, "${bindir}/psql")
 
-      $service_status      = $service_status
+      $service_reload      = pick($service_reload, "service ${service_name} reload")
       $python_package_name = pick($python_package_name, 'python-psycopg2')
     }
 
@@ -83,6 +83,7 @@ class postgresql::params inherits postgresql::globals {
       $psql_path            = pick($psql_path, "${bindir}/psql")
 
       $service_status      = $service_status
+      $service_reload      = pick($service_reload, "service ${service_name} reload")
       $python_package_name = pick($python_package_name, 'python-psycopg2')
     }
 
@@ -115,6 +116,7 @@ class postgresql::params inherits postgresql::globals {
       $datadir              = pick($datadir, "/var/lib/postgresql/${version}/main")
       $confdir              = pick($confdir, "/etc/postgresql/${version}/main")
       $service_status       = pick($service_status, "/etc/init.d/${service_name} status | /bin/egrep -q 'Running clusters: .+|online'")
+      $service_reload       = pick($service_reload, "service ${service_name} reload")
       $psql_path            = pick($psql_path, "/usr/bin/psql")
 
       $firewall_supported   = pick($firewall_supported, true)
