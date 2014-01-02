@@ -17,6 +17,17 @@ class postgresql::server::initdb {
       group  => $group,
       mode   => '0700',
     }
+    if($::osfamily == "Gentoo") {
+      eselect { 'postgresql':
+        ensure => $postgresql::server::version,
+      }
+      $dataparentdir = dirname($datadir)
+      file { $dataparentdir:
+        ensure => directory,
+      }
+      File[$dataparentdir]->File[$datadir]
+      Eselect['postgresql']->File[$datadir]
+    }
 
     if($needs_initdb) {
       # Build up the initdb command.
