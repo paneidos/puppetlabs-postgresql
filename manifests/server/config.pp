@@ -21,6 +21,7 @@ class postgresql::server::config {
 
   if ($ensure == 'present' or $ensure == true) {
     if ($::osfamily == 'Gentoo') {
+      $confdir = dirname($pg_hba_conf_path)
       $pg_ident_conf = "${confdir}/pg_ident.conf"
       file { $pg_ident_conf:
         ensure => present,
