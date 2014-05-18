@@ -19,7 +19,7 @@ class postgresql::server::initdb {
     }
     if($::osfamily == "Gentoo") {
       eselect { 'postgresql':
-        ensure => $postgresql::server::version,
+        set => $postgresql::server::version,
       }
       $dataparentdir = dirname($datadir)
       file { $dataparentdir:
