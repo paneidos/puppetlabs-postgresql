@@ -20,6 +20,12 @@ class postgresql::server::config {
   }
 
   if ($ensure == 'present' or $ensure == true) {
+    if ($::osfamily == 'Gentoo') {
+      $pg_ident_conf = "${confdir}/pg_ident.conf"
+      file { $pg_ident_conf:
+        ensure => present,
+      }
+    }
 
     if ($manage_pg_hba_conf == true) {
       # Prepare the main pg_hba file
