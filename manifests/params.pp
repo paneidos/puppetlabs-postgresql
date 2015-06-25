@@ -154,8 +154,8 @@ class postgresql::params inherits postgresql::globals {
       $firewall_supported = pick($firewall_supported, false)
       $needs_initdb       = pick($needs_initdb, true)
 
-      $client_package_name  = pick($client_package_name, "dev-db/postgresql-base:${version}")
-      $server_package_name  = pick($server_package_name, "dev-db/postgresql-server:${version}")
+      $client_package_name  = pick($client_package_name, "dev-db/postgresql:${version}")
+      $server_package_name  = pick($server_package_name, "dev-db/postgresql:${version}")
       $java_package_name    = pick($java_package_name, 'dev-java/jdbc-postgresql')
       # Gentoo doesn't have develop packages
       $devel_package_name   = pick($devel_package_name, 'undef')

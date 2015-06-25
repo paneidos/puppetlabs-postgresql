@@ -2,14 +2,17 @@
 class postgresql::client (
   $file_ensure    = 'file',
   $package_name   = $postgresql::params::client_package_name,
-  $package_ensure = 'present'
+  $package_ensure = 'present',
+  $server_package_name   = $postgresql::params::server_package_name
 ) inherits postgresql::params {
   validate_string($package_name)
 
-  package { 'postgresql-client':
-    ensure  => $package_ensure,
-    name    => $package_name,
-    tag     => 'postgresql',
+  unless $server_package_name == $package_name {
+    package { 'postgresql-client':
+      ensure  => $package_ensure,
+      name    => $package_name,
+      tag     => 'postgresql',
+    }
   }
 
   file { '/usr/local/bin/validate_postgresql_connection.sh':

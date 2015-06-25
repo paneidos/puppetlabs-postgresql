@@ -11,9 +11,14 @@ class postgresql::server::install {
     default => $package_ensure,
   }
 
+  if $package_name == $client_package_name {
+    $_package_alias = 'postgresql-client'
+  }
+
   package { 'postgresql-server':
     ensure => $_package_ensure,
     name   => $package_name,
+    alias  => $_package_alias,
 
     # This is searched for to create relationships with the package repos, be
     # careful about its removal
